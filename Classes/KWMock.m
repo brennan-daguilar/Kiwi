@@ -643,4 +643,25 @@ static void setValueForKeyImplementation(id self, SEL _cmd, id a, id b) {
     setValueForKeyImplementation(self, _cmd, value, keyPath);
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(observeValueForKeyPath:ofObject:change:context:)]];
+    [invocation setSelector:@selector(observeValueForKeyPath:ofObject:change:context:)];
+    [invocation setTarget:self];
+    if (keyPath) {
+        [invocation setArgument:&keyPath atIndex:2];
+    }
+    if (object) {
+        [invocation setArgument:&object atIndex:3];
+    }
+    if (change) {
+        [invocation setArgument:&change atIndex:4];
+    }
+    if (context) {
+        [invocation setArgument:&context atIndex:5];
+    }
+    [self forwardInvocation:invocation];
+}
+
+
 @end
